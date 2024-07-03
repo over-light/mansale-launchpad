@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function CreateAirdrop() {
-  return (
-    <div>CreateAirdrop</div>
-  )
+  return <div>CreateAirdrop</div>;
 }
 
-export default CreateAirdrop
+export default CreateAirdrop;

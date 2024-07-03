@@ -67,7 +67,7 @@ export const orgMenu: MenuItem[] = [
     label: 'Community',
     icon: IconCreditCard,
     disabled: false,
-    link:'/community',
+    link: '/community',
     resource: 'community',
     subMenu: [
       {
