@@ -1,12 +1,13 @@
 export interface IRootContext {
-    theme?: string;
+  theme?: string;
 }
 
 export type MenuItem = {
-    label: string;
-    icon: any;
-    link: string;
-    resource: any;
-    disabled?: boolean;
-    subMenu?: MenuItem[];
-  };
+  label: string;
+  icon: any;
+  link?: string;
+  resource: any;
+  disabled?: boolean;
+  subMenu?: MenuItem[];
+  onClick?: any;
+};
