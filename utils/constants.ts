@@ -1,106 +1,93 @@
 import {
-  IconActivityHeartbeat,
   IconBolt,
   IconBrandDiscordFilled,
   IconBrandTelegram,
   IconBrandTwitterFilled,
   IconCheckbox,
+  IconCoins,
   IconCreditCard,
   IconDatabase,
-  IconFlaskFilled,
-  IconListSearch,
-  IconSettings,
-  IconTimeline,
-  IconUsers,
+  IconGiftFilled,
+  IconHome,
+  IconRocket,
+  IconSquareRoundedPlusFilled,
 } from '@tabler/icons-react';
 import { MenuItem } from './types/types';
 
 export const APP_MENU: MenuItem[] = [
   {
     label: 'Home',
-    icon: IconTimeline,
+    icon: IconHome,
     link: '/home',
-    resource: 'analytics',
+    resource: 'home',
   },
   {
-    label: 'Launchpad',
-    icon: IconTimeline,
+    label: 'Launchpads',
+    icon: IconRocket,
     link: '/launchpad',
     resource: 'analytics',
     subMenu: [
       {
         label: 'Create Token',
-        icon: IconFlaskFilled,
-        link: '/createtoken',
+        icon: IconSquareRoundedPlusFilled,
+        link: '/launchpads/token',
         resource: 'evaluations',
       },
       {
         label: 'Create Presale',
-        icon: IconActivityHeartbeat,
-        link: '/createpresale',
+        icon: IconGiftFilled,
+        link: '/launchpads/presale',
         resource: 'evaluations',
       },
       {
         label: 'Airdrop',
         icon: IconDatabase,
-        link: '/airdrop',
+        link: '/launchpads/airdrop',
         resource: 'datasets',
-      },
-      {
-        label: 'Checklists',
-        icon: IconCheckbox,
-        link: '/evaluations/checklists',
-        resource: 'checklists',
       },
     ],
   },
   {
     label: 'Tokens',
-    icon: IconListSearch,
+    icon: IconCoins,
     link: '/tokens',
     resource: 'logs',
   },
 ];
 
-export const orgMenu:MenuItem[] = [
+export const orgMenu: MenuItem[] = [
   {
-    label: 'Documentation',
-    link:"",
+    label: 'Docs',
+    link: '/docs',
     icon: IconBolt,
     disabled: false,
-    resource: 'billing',
+    resource: 'docs',
   },
   {
     label: 'Community',
-    link: '/billing',
     icon: IconCreditCard,
     disabled: false,
-    resource: 'billing',
+    link:'/community',
+    resource: 'community',
     subMenu: [
-        {
-          label: 'Twitter',
-          icon: IconBrandTwitterFilled,
-          link: '/tw',
-          resource: 'evaluations',
-        },
-        {
-          label: 'Discord',
-          icon: IconBrandDiscordFilled,
-          link: '/discord',
-          resource: 'evaluations',
-        },
-        {
-          label: 'Telegram',
-          icon: IconBrandTelegram,
-          link: '/telegram',
-          resource: 'datasets',
-        },
-        {
-          label: 'Checklists',
-          icon: IconCheckbox,
-          link: '/evaluations/checklists',
-          resource: 'checklists',
-        },
-      ],
+      {
+        label: 'Twitter',
+        icon: IconBrandTwitterFilled,
+        resource: 'twitter',
+        onClick: () => {},
+      },
+      {
+        label: 'Discord',
+        icon: IconBrandDiscordFilled,
+        resource: 'discord',
+        onClick: () => {},
+      },
+      {
+        label: 'Telegram',
+        icon: IconBrandTelegram,
+        resource: 'telegram',
+        onClick: () => {},
+      },
+    ],
   },
 ];

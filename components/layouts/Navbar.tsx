@@ -42,19 +42,17 @@ export default function Navbar() {
   return (
     <Flex align="center" justify="space-between" pos="absolute" top={8} right={8}>
       <Group>
-        {!currentPath.includes('/billing') && (
-          <>
-            <Button
-              variant="gradient"
-              size="xs"
-              onClick={() => {}}
-              leftSection={<IconWallet size="16" />}
-              gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-            >
-              Connect Wallet
-            </Button>
-          </>
-        )}
+        <>
+          <Button
+            variant="gradient"
+            size="xs"
+            onClick={() => {}}
+            leftSection={<IconWallet size="16" />}
+            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+          >
+            Connect Wallet
+          </Button>
+        </>
       </Group>
     </Flex>
   );
