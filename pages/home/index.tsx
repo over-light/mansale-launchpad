@@ -1,6 +1,5 @@
-import { ColorSchemeToggle } from '@/components/index/ColorSchemeToggle/ColorSchemeToggle';
-import Features from '@/components/index/Features';
-import { Welcome } from '@/components/index/Welcome/Welcome';
+import Features from '@/components/pages/home/Features';
+import { Welcome } from '@/components/pages/home/Welcome/Welcome';
 
 export default function HomePage() {
   return (
