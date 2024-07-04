@@ -46,9 +46,7 @@ export default function Navbar() {
         <Image alt="Favicon" src="/favicon.svg" width={32} height={32} />
         <Title order={2}>ManSale</Title>
       </Flex>
-      <Group>
-        <WalletMultiButton>Connect Wallet</WalletMultiButton>
-      </Group>
+      {/* <WalletMultiButton>Connect Wallet</WalletMultiButton> */}
     </Flex>
   );
 }
