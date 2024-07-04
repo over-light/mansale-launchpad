@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
-import { Card, Container, Group, Text, Button, Badge, List, Center, Stack } from '@mantine/core';
+import {
+  Card,
+  Container,
+  Group,
+  Text,
+  Button,
+  Badge,
+  List,
+  Center,
+  Stack,
+  Title,
+} from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
@@ -61,19 +72,25 @@ const RecentTransactions = ({ publicKey, connection }) => {
 
   return (
     <List spacing="md" size="sm" center>
-    {transactions.map((tx) => (
-      <Card key={tx.signature} shadow="sm" padding="lg" radius="md" withBorder>
-        <Stack>
-          <Text size="sm" color="dimmed">Signature:</Text>
-          <Text style={{ wordWrap: 'break-word' }}>{tx.signature}</Text>
-          <Text size="sm" color="dimmed">Time:</Text>
-          <Text>{new Date(tx.blockTime * 1000).toLocaleString()}</Text>
-          <Text size="sm" color="dimmed">Amount:</Text>
-          <Text>{tx.amount} SOL</Text>
-        </Stack>
-      </Card>
-    ))}
-  </List>
+      {transactions.map((tx) => (
+        <Card key={tx.signature} shadow="sm" p="md" radius="md" withBorder>
+          <Stack gap="sm">
+            <Text size="sm" color="dimmed">
+              Signature:
+            </Text>
+            <Text style={{ wordWrap: 'break-word' }}>{tx.signature}</Text>
+            <Text size="sm" color="dimmed">
+              Time:
+            </Text>
+            <Text>{new Date(tx.blockTime * 1000).toLocaleString()}</Text>
+            <Text size="sm" color="dimmed">
+              Amount:
+            </Text>
+            <Text>{tx.amount} SOL</Text>
+          </Stack>
+        </Card>
+      ))}
+    </List>
   );
 };
 
@@ -130,7 +147,9 @@ export default function WalletProfile() {
         {publicKey ? (
           <>
             <Group mt="md" mb="xs">
-              <Text>Wallet Profile</Text>
+              <Center>
+                <Title order={2}>Wallet Profile</Title>
+              </Center>
               <Badge color="pink" variant="light">
                 Connected
               </Badge>
@@ -139,9 +158,7 @@ export default function WalletProfile() {
             <Text size="sm" color="dimmed">
               Your public key:
             </Text>
-            <Text style={{ wordWrap: 'break-word' }}>
-              {publicKey.toString()}
-            </Text>
+            <Text style={{ wordWrap: 'break-word' }}>{publicKey.toString()}</Text>
 
             <Text size="sm" color="dimmed" mt="md">
               Balance:
@@ -164,9 +181,7 @@ export default function WalletProfile() {
           </>
         ) : (
           <Center>
-            <Text size="lg">
-              Wallet is not connected
-            </Text>
+            <Text size="lg">Wallet is not connected</Text>
           </Center>
         )}
       </Card>

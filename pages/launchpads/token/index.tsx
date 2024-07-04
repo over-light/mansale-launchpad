@@ -48,7 +48,7 @@ function CreateToken() {
 
   return (
     <Container>
-      <Card>
+      <Card shadow="sm" withBorder>
         <Card.Section>
           <Image
             src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"

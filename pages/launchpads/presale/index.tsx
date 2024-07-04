@@ -1,54 +1,53 @@
+import React, { useState } from 'react';
 import {
-  Button,
   Card,
-  Center,
   Container,
-  Image,
-  NumberInput,
-  Stack,
-  Textarea,
+  Group,
+  Text,
   TextInput,
-  Title
+  Button,
+  Image,
+  Badge,
+  Loader,
+  Stack,
+  Center,
+  Title,
 } from '@mantine/core';
-import { useState } from 'react';
+import axios from 'axios';
+import { showNotification } from '@mantine/notifications';
+import { useConnection } from '@solana/wallet-adapter-react';
 
-function CreatePreSale() {
-  const [name, setName] = useState('');
-  const [symbol, setSymbol] = useState('');
-  const [decimals, setDecimals] = useState(0);
-  const [totalSupply, setTotalSupply] = useState(0);
-  const [logoURL, setLogoURL] = useState('');
-  const [website, setWebsite] = useState('');
-  const [telegram, setTelegram] = useState('');
-  const [discord, setDiscord] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [description, setDescription] = useState('');
-  const [mintAuthority, setMintAuthority] = useState('');
-  const [freezeAuthority, setFreezeAuthority] = useState('');
-  const [updateAuthority, setUpdateAuthority] = useState('');
+function PresalePage() {
+  const [tokenAddress, setTokenAddress] = useState('');
+  const [tokenData, setTokenData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = () => {
-    // Handle token creation logic here
-    console.log({
-      name,
-      symbol,
-      decimals,
-      totalSupply,
-      logoURL,
-      website,
-      telegram,
-      discord,
-      twitter,
-      description,
-      mintAuthority,
-      freezeAuthority,
-      updateAuthority,
-    });
+  const { connection } = useConnection();
+  const fetchTokenData = async (address) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(
+        `https://solscan.io/token/${address}`
+      );
+      console.log(response);
+      setTokenData(response.data);
+      setLoading(false);
+    } catch (err) {
+      showNotification({ message: 'Failed' });
+      setError('Failed to fetch token data');
+      setLoading(false);
+    }
+  };
+
+  const handleFetchData = () => {
+    fetchTokenData(tokenAddress);
   };
 
   return (
     <Container>
-      <Card>
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
           <Image
             src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -56,104 +55,76 @@ function CreatePreSale() {
             alt="Token Logo"
           />
         </Card.Section>
-
-        <Stack mt="md" mb="xs">
+        <Stack gap="md" mt="md" mb="xs">
           <Center>
-            <Title order={2}>Create PreSale</Title>
+            <Title order={2}>Create Token Presale</Title>
           </Center>
           <TextInput
-            label="Name"
-            placeholder="Token Name"
-            value={name}
-            onChange={(e) => setName(e.currentTarget.value)}
+            label="Token Address"
+            placeholder="Enter the token contract address"
+            value={tokenAddress}
+            onChange={(e) => setTokenAddress(e.currentTarget.value)}
             required
           />
-          <TextInput
-            label="Symbol"
-            placeholder="TOKEN"
-            value={symbol}
-            onChange={(e) => setSymbol(e.currentTarget.value)}
-            required
-          />
-          <NumberInput
-            label="Decimals"
-            placeholder="0-18"
-            value={decimals}
-            onChange={(val) => setDecimals(val)}
-            required
-          />
-          <NumberInput
-            label="Total Supply"
-            placeholder="1000000"
-            value={totalSupply}
-            onChange={(val) => setTotalSupply(val)}
-            required
-          />
-          <TextInput
-            label="Logo URL"
-            placeholder="https://example.com/logo.png"
-            value={logoURL}
-            onChange={(e) => setLogoURL(e.currentTarget.value)}
-          />
-          <TextInput
-            label="Website"
-            placeholder="https://example.com"
-            value={website}
-            onChange={(e) => setWebsite(e.currentTarget.value)}
-          />
-          <TextInput
-            label="Telegram"
-            placeholder="https://t.me/your_channel"
-            value={telegram}
-            onChange={(e) => setTelegram(e.currentTarget.value)}
-          />
-          <TextInput
-            label="Discord"
-            placeholder="https://discord.gg/your_channel"
-            value={discord}
-            onChange={(e) => setDiscord(e.currentTarget.value)}
-          />
-          <TextInput
-            label="Twitter"
-            placeholder="https://twitter.com/your_handle"
-            value={twitter}
-            onChange={(e) => setTwitter(e.currentTarget.value)}
-          />
-          <Textarea
-            label="Description"
-            placeholder="Describe your token"
-            value={description}
-            onChange={(e) => setDescription(e.currentTarget.value)}
-          />
-          <TextInput
-            label="Mint Authority"
-            placeholder="Mint authority public key"
-            value={mintAuthority}
-            onChange={(e) => setMintAuthority(e.currentTarget.value)}
-            required
-          />
-          <TextInput
-            label="Freeze Authority"
-            placeholder="Freeze authority public key"
-            value={freezeAuthority}
-            onChange={(e) => setFreezeAuthority(e.currentTarget.value)}
-            required
-          />
-          <TextInput
-            label="Update Authority"
-            placeholder="Update authority public key"
-            value={updateAuthority}
-            onChange={(e) => setUpdateAuthority(e.currentTarget.value)}
-            required
-          />
+          <Button
+            color="blue"
+            radius="md"
+            onClick={handleFetchData}
+            disabled={!tokenAddress || loading}
+          >
+            {loading ? <Loader size="xs" /> : 'Fetch Token Data'}
+          </Button>
         </Stack>
 
-        <Button color="blue" fullWidth mt="md" radius="md" onClick={handleSubmit}>
-          Create Token
-        </Button>
+        {error && <Text color="red">{error}</Text>}
+
+        {tokenData && (
+          <Card shadow="sm" padding="lg" radius="md" withBorder mt="md">
+            <Stack gap="md">
+              <Image src={tokenData?.logoURL} height={160} alt="Token Logo" />
+              <Text>Token Name: {tokenData?.name}</Text>
+              <Text>Token Symbol: {tokenData?.symbol}</Text>
+              <Text>Decimals: {tokenData?.decimals}</Text>
+              <Text>Total Supply: {tokenData?.totalSupply}</Text>
+              <Text>Token Price: {tokenData?.price}</Text>
+              <Text>Start Date: {tokenData?.startDate}</Text>
+              <Text>End Date: {tokenData?.endDate}</Text>
+              <Text>Min Contribution: {tokenData?.minContribution}</Text>
+              <Text>Max Contribution: {tokenData?.maxContribution}</Text>
+              <Text>Soft Cap: {tokenData?.softCap}</Text>
+              <Text>Hard Cap: {tokenData?.hardCap}</Text>
+              <Text>
+                Website:{' '}
+                <a href={tokenData?.website} target="_blank" rel="noopener noreferrer">
+                  {tokenData?.website}
+                </a>
+              </Text>
+              <Text>
+                Telegram:{' '}
+                <a href={tokenData?.telegram} target="_blank" rel="noopener noreferrer">
+                  {tokenData?.telegram}
+                </a>
+              </Text>
+              <Text>
+                Discord:{' '}
+                <a href={tokenData?.discord} target="_blank" rel="noopener noreferrer">
+                  {tokenData?.discord}
+                </a>
+              </Text>
+              <Text>
+                Twitter:{' '}
+                <a href={tokenData?.twitter} target="_blank" rel="noopener noreferrer">
+                  {tokenData?.twitter}
+                </a>
+              </Text>
+              <Text>Description: {tokenData?.description}</Text>
+              <Badge color="green">Contract Address: {tokenAddress}</Badge>
+            </Stack>
+          </Card>
+        )}
       </Card>
     </Container>
   );
 }
 
-export default CreatePreSale;
+export default PresalePage;

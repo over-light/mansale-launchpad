@@ -3,15 +3,14 @@ import {
   IconBrandDiscordFilled,
   IconBrandTelegram,
   IconBrandTwitterFilled,
-  IconCheckbox,
   IconCoins,
   IconCreditCard,
-  IconDatabase,
+  IconDropletFilled,
   IconGiftFilled,
   IconHome,
   IconRocket,
   IconSquareRoundedPlusFilled,
-  IconUser,
+  IconUser
 } from '@tabler/icons-react';
 import { MenuItem } from './types/types';
 
@@ -42,7 +41,7 @@ export const APP_MENU: MenuItem[] = [
       },
       {
         label: 'Airdrop',
-        icon: IconDatabase,
+        icon: IconDropletFilled,
         link: '/launchpads/airdrop',
         resource: 'datasets',
       },
