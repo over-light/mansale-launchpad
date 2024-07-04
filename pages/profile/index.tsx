@@ -1,22 +1,97 @@
-'use client';
+import React, { useEffect, useState } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { useEffect, useState } from 'react';
+import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
+import { Card, Container, Group, Text, Button, Badge, List, Center, Stack } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
-export default function Address() {
+const TokenAccounts = ({ publicKey, connection }) => {
+  const [tokenAccounts, setTokenAccounts] = useState([]);
+
+  useEffect(() => {
+    const getTokenAccounts = async () => {
+      const response = await connection.getParsedTokenAccountsByOwner(publicKey, {
+        programId: new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'),
+      });
+      setTokenAccounts(response.value);
+    };
+
+    if (publicKey) {
+      getTokenAccounts();
+    }
+  }, [publicKey, connection]);
+
+  return (
+    <List spacing="sm" size="sm" center>
+      {tokenAccounts.map((tokenAccount) => (
+        <List.Item key={tokenAccount.pubkey.toBase58()}>
+          {tokenAccount.account.data.parsed.info.tokenAmount.uiAmount}{' '}
+          {tokenAccount.account.data.parsed.info.mint}
+        </List.Item>
+      ))}
+    </List>
+  );
+};
+
+const RecentTransactions = ({ publicKey, connection }) => {
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const getRecentTransactions = async () => {
+      const confirmedSignatures = await connection.getConfirmedSignaturesForAddress2(publicKey, {
+        limit: 5,
+      });
+      const transactionDetails = await Promise.all(
+        confirmedSignatures.map(async (signature) => {
+          const transaction = await connection.getConfirmedTransaction(signature.signature);
+          return {
+            signature: signature.signature,
+            blockTime: transaction.blockTime,
+            amount: transaction.meta.postBalances[0] - transaction.meta.preBalances[0],
+          };
+        })
+      );
+      setTransactions(transactionDetails);
+    };
+
+    if (publicKey) {
+      getRecentTransactions();
+    }
+  }, [publicKey, connection]);
+
+  return (
+    <List spacing="md" size="sm" center>
+    {transactions.map((tx) => (
+      <Card key={tx.signature} shadow="sm" padding="lg" radius="md" withBorder>
+        <Stack>
+          <Text size="sm" color="dimmed">Signature:</Text>
+          <Text style={{ wordWrap: 'break-word' }}>{tx.signature}</Text>
+          <Text size="sm" color="dimmed">Time:</Text>
+          <Text>{new Date(tx.blockTime * 1000).toLocaleString()}</Text>
+          <Text size="sm" color="dimmed">Amount:</Text>
+          <Text>{tx.amount} SOL</Text>
+        </Stack>
+      </Card>
+    ))}
+  </List>
+  );
+};
+
+export default function WalletProfile() {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
   const [balance, setBalance] = useState<number>(0);
 
   useEffect(() => {
     if (publicKey) {
-      (async function getBalanceEvery10Seconds() {
+      const getBalanceEvery10Seconds = async () => {
         const newBalance = await connection.getBalance(publicKey);
         setBalance(newBalance / LAMPORTS_PER_SOL);
         setTimeout(getBalanceEvery10Seconds, 10000);
-      })();
+      };
+      getBalanceEvery10Seconds();
     }
-  }, [publicKey, connection, balance]);
+  }, [publicKey, connection]);
 
   const getAirdropOnClick = async () => {
     try {
@@ -32,34 +107,69 @@ export default function Address() {
         'confirmed'
       );
       if (sigResult) {
-        alert('Airdrop was confirmed!');
+        showNotification({
+          title: 'Success',
+          message: 'Airdrop was confirmed!',
+          color: 'teal',
+          icon: <IconCheck />,
+        });
       }
     } catch (err) {
-      alert('You are Rate limited for Airdrop');
+      showNotification({
+        title: 'Error',
+        message: 'You are rate limited for Airdrop',
+        color: 'red',
+        icon: <IconX />,
+      });
     }
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-evenly p-24">
-      {publicKey ? (
-        <div className="flex flex-col gap-4">
-          <h1>Your Public key is: {publicKey?.toString()}</h1>
+    <Container size="sm" my="md">
+      <Card shadow="sm" padding="lg" radius="md" withBorder>
+        {publicKey ? (
+          <>
+            <Group mt="md" mb="xs">
+              <Text>Wallet Profile</Text>
+              <Badge color="pink" variant="light">
+                Connected
+              </Badge>
+            </Group>
 
-          <h2>Your Balance is: {balance} SOL</h2>
+            <Text size="sm" color="dimmed">
+              Your public key:
+            </Text>
+            <Text style={{ wordWrap: 'break-word' }}>
+              {publicKey.toString()}
+            </Text>
 
-          <div>
-            <button
-              onClick={getAirdropOnClick}
-              type="button"
-              className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            >
+            <Text size="sm" color="dimmed" mt="md">
+              Balance:
+            </Text>
+            <Text>{balance} SOL</Text>
+
+            <Button fullWidth mt="md" radius="md" color="blue" onClick={getAirdropOnClick}>
               Get Airdrop
-            </button>
-          </div>
-        </div>
-      ) : (
-        <h1>Wallet is not connected</h1>
-      )}
-    </main>
+            </Button>
+
+            <Text size="sm" color="dimmed" mt="md">
+              Token Balances:
+            </Text>
+            <TokenAccounts publicKey={publicKey} connection={connection} />
+
+            <Text size="sm" color="dimmed" mt="md">
+              Recent Transactions:
+            </Text>
+            <RecentTransactions publicKey={publicKey} connection={connection} />
+          </>
+        ) : (
+          <Center>
+            <Text size="lg">
+              Wallet is not connected
+            </Text>
+          </Center>
+        )}
+      </Card>
+    </Container>
   );
 }

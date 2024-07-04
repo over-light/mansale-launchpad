@@ -59,7 +59,6 @@ export default function Sidebar() {
       h="100%"
     >
       <Stack w="100%" gap={0}>
-        <Divider />
         <Box as="nav" className="flex-grow" w="100%" px="2" py="2" direction="column">
           {APP_MENU.map((item) => (
             <NavbarLink {...item} key={item.label} />
