@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { IRootContext } from './types/types';
+import { IRootContext } from '../../utils/types/types';
 
 const RootContext = createContext<IRootContext>({});
 

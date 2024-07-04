@@ -1,4 +1,4 @@
-import { Anchor, Button, Flex, Group } from '@mantine/core';
+import { Anchor, Box, Button, Flex, Group, Image, Title } from '@mantine/core';
 
 import {
   IconAlertTriangle,
@@ -10,6 +10,7 @@ import {
 import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 const floatingBtn = {
   position: 'fixed',
@@ -40,19 +41,13 @@ export default function Navbar() {
   //   }, [router.query])
 
   return (
-    <Flex align="center" justify="space-between" pos="absolute" top={8} right={8}>
+    <Flex align="center" justify="space-between" w="100%">
+      <Flex direction="row" gap="sm" justify="center" align="center">
+        <Image alt="Favicon" src="/favicon.svg" width={32} height={32} />
+        <Title order={2}>ManSale</Title>
+      </Flex>
       <Group>
-        <>
-          <Button
-            variant="gradient"
-            size="xs"
-            onClick={() => {}}
-            leftSection={<IconWallet size="16" />}
-            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
-          >
-            Connect Wallet
-          </Button>
-        </>
+        <WalletMultiButton>Connect Wallet</WalletMultiButton>
       </Group>
     </Flex>
   );
