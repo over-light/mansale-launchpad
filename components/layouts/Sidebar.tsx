@@ -55,20 +55,10 @@ export default function Sidebar() {
     <Flex
       justify="space-between"
       align="start"
-      w={200}
       direction="column"
-      style={{
-        borderRight: '1px solid var(--mantine-color-default-border)',
-      }}
+      h="100%"
     >
       <Stack w="100%" gap={0}>
-        <Box w="100%" my="lg">
-          <Flex direction="row" gap="sm" justify="center" align="center">
-            <Image alt="Favicon" src="/favicon.svg" width={32} height={32} />
-            <Title order={2}>ManSale</Title>
-          </Flex>
-        </Box>
-        <Divider />
         <Box as="nav" className="flex-grow" w="100%" px="2" py="2" direction="column">
           {APP_MENU.map((item) => (
             <NavbarLink {...item} key={item.label} />
