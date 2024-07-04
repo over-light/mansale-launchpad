@@ -11,6 +11,7 @@ import {
   IconHome,
   IconRocket,
   IconSquareRoundedPlusFilled,
+  IconUser,
 } from '@tabler/icons-react';
 import { MenuItem } from './types/types';
 
@@ -51,6 +52,12 @@ export const APP_MENU: MenuItem[] = [
     label: 'Tokens',
     icon: IconCoins,
     link: '/tokens',
+    resource: 'logs',
+  },
+  {
+    label: 'Profile',
+    icon: IconUser,
+    link: '/profile',
     resource: 'logs',
   },
 ];
