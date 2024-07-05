@@ -1,63 +1,15 @@
-import {
-  Anchor,
-  Box,
-  Divider,
-  Flex,
-  NavLink,
-  Stack,
-  Text,
-  ThemeIcon,
-  Title,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { Box, Divider, Flex, NavLink, Stack, Text, useMantineColorScheme } from '@mantine/core';
 
 import { IconMoonFilled, IconSunFilled, IconSunMoon } from '@tabler/icons-react';
 
 import { APP_MENU, orgMenu } from '@/utils/constants';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-
-function NavbarLink({ icon: Icon, label, link, soon, onClick, c, subMenu, disabled = false }) {
-  const router = useRouter();
-
-  const active = router.pathname.startsWith(link);
-
-  return (
-    <NavLink
-      component={!onClick ? Link : 'button'}
-      href={link}
-      w="100%"
-      onClick={onClick}
-      c={c}
-      label={`${label}${soon ? ' (soon)' : ''}`}
-      disabled={disabled || soon}
-      active={active}
-      leftSection={
-        <ThemeIcon
-          variant={active ? 'light' : 'subtle'}
-          color={active ? c || 'blue' : c || 'blue.4'}
-          size="md"
-        >
-          <Icon size={18} />
-        </ThemeIcon>
-      }
-    >
-      {subMenu?.map((item) => <NavbarLink {...item} key={item.label} />)}
-    </NavLink>
-  );
-}
+import NavbarLink from './components/NavbarLink';
 
 export default function Sidebar() {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
 
   return (
-    <Flex
-      justify="space-between"
-      align="start"
-      direction="column"
-      h="100%"
-    >
+    <Flex justify="space-between" align="start" direction="column" h="100%">
       <Stack w="100%" gap={0}>
         <Box className="flex-grow" w="100%" px="2" py="2">
           {APP_MENU.map((item) => (

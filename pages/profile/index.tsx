@@ -17,7 +17,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
 const TokenAccounts = ({ publicKey, connection }) => {
-  const [tokenAccounts, setTokenAccounts] = useState([]);
+  const [tokenAccounts, setTokenAccounts] = useState<any[]>([]);
 
   useEffect(() => {
     const getTokenAccounts = async () => {
@@ -34,7 +34,7 @@ const TokenAccounts = ({ publicKey, connection }) => {
 
   return (
     <List spacing="sm" size="sm" center>
-      {tokenAccounts.map((tokenAccount) => (
+      {tokenAccounts?.map((tokenAccount) => (
         <List.Item key={tokenAccount.pubkey.toBase58()}>
           {tokenAccount.account.data.parsed.info.tokenAmount.uiAmount}{' '}
           {tokenAccount.account.data.parsed.info.mint}
@@ -45,7 +45,7 @@ const TokenAccounts = ({ publicKey, connection }) => {
 };
 
 const RecentTransactions = ({ publicKey, connection }) => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<any[]>([]);
 
   useEffect(() => {
     const getRecentTransactions = async () => {
@@ -174,10 +174,10 @@ export default function WalletProfile() {
             </Text>
             <TokenAccounts publicKey={publicKey} connection={connection} />
 
-            <Text size="sm" color="dimmed" mt="md">
+            {/* <Text size="sm" color="dimmed" mt="md">
               Recent Transactions:
             </Text>
-            <RecentTransactions publicKey={publicKey} connection={connection} />
+            <RecentTransactions publicKey={publicKey} connection={connection} /> */}
           </>
         ) : (
           <Center>
