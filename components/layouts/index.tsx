@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import AppWalletProvider from '../contexts/WalletProvider';
 import { useDisclosure } from '@mantine/hooks';
+import { TxContextProvider } from '../contexts/TxContext';
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
@@ -17,22 +18,24 @@ export default function Layout({ children }: { children: ReactNode }) {
       <ModalsProvider>
         <AppWalletProvider>
           <RootContextProvider>
-            <AppShell
-              header={{ height: 60 }}
-              navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-              padding="md"
-            >
-              <AppShell.Header>
-                <Group h="100%" px="sm">
-                  <Navbar />
-                  <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                </Group>
-              </AppShell.Header>
-              <AppShell.Navbar p="sm" w="250">
-                <Sidebar />
-              </AppShell.Navbar>
-              <AppShell.Main>{children}</AppShell.Main>
-            </AppShell>
+            <TxContextProvider>
+              <AppShell
+                header={{ height: 60 }}
+                navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+                padding="md"
+              >
+                <AppShell.Header>
+                  <Group h="100%" px="sm">
+                    <Navbar />
+                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                  </Group>
+                </AppShell.Header>
+                <AppShell.Navbar p="sm" w="250">
+                  <Sidebar />
+                </AppShell.Navbar>
+                <AppShell.Main>{children}</AppShell.Main>
+              </AppShell>
+            </TxContextProvider>
           </RootContextProvider>
         </AppWalletProvider>
       </ModalsProvider>
