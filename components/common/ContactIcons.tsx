@@ -26,9 +26,9 @@ function ContactIcon({ icon: Icon, title, description, ...others }: ContactIconP
 }
 
 const MOCKDATA = [
-  { title: 'Email', description: 'hello@mantine.dev', icon: IconAt },
-  { title: 'Phone', description: '+49 (800) 335 35 35', icon: IconPhone },
-  { title: 'Address', description: '844 Morris Park avenue', icon: IconMapPin },
+  { title: 'Email', description: 'hello@mansale.team', icon: IconAt },
+  { title: 'Phone', description: '+00 (000) 000 00 00', icon: IconPhone },
+  { title: 'Address', description: 'Antarctica', icon: IconMapPin },
   { title: 'Working hours', description: '8 a.m. – 11 p.m.', icon: IconSun },
 ];
 
