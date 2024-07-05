@@ -1,5 +1,6 @@
 import { MenuItem } from '@/utils/types/types';
 import { NavLink, ThemeIcon } from '@mantine/core';
+import Link from 'next/link';
 
 import { useRouter } from 'next/router';
 
@@ -17,7 +18,7 @@ interface INavbarLink {
 export default function NavbarLink({
   icon: Icon,
   label,
-  link = '',
+  link = '#',
   soon = false,
   onClick = () => {},
   c = '',
@@ -25,12 +26,11 @@ export default function NavbarLink({
   disabled = false,
 }: INavbarLink) {
   const router = useRouter();
-
   const active = router.pathname.startsWith(link);
-
+  console.log(router.pathname, active);
   return (
     <NavLink
-      // component={!onClick ? Link : 'button'}
+      component={Link}
       href={link}
       w="100%"
       onClick={onClick}
