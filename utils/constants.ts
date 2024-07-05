@@ -8,9 +8,10 @@ import {
   IconDropletFilled,
   IconGiftFilled,
   IconHome,
+  IconPhoneCall,
   IconRocket,
   IconSquareRoundedPlusFilled,
-  IconUser
+  IconUser,
 } from '@tabler/icons-react';
 import { MenuItem } from './types/types';
 
@@ -95,5 +96,12 @@ export const orgMenu: MenuItem[] = [
         onClick: () => {},
       },
     ],
+  },
+  {
+    label: 'Contact',
+    link: '/contact',
+    icon: IconPhoneCall,
+    disabled: false,
+    resource: 'contact',
   },
 ];
