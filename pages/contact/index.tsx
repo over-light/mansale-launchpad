@@ -7,6 +7,7 @@ import {
   Button,
   Group,
   ActionIcon,
+  Box,
 } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 import classes from './style.module.css';
@@ -22,9 +23,9 @@ export default function ContactUs() {
   ));
 
   return (
-    <div className={classes.wrapper}>
+    <Box className={classes.wrapper}>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={50}>
-        <div>
+        <Box>
           <Title className={classes.title}>Contact us</Title>
           <Text className={classes.description} mt="sm" mb={30}>
             Leave your email and we will get back to you within 24 hours
@@ -33,8 +34,8 @@ export default function ContactUs() {
           <ContactIconsList />
 
           <Group mt="xl">{icons}</Group>
-        </div>
-        <div className={classes.form}>
+        </Box>
+        <Box className={classes.form}>
           <TextInput
             label="Email"
             placeholder="your@email.com"
@@ -59,8 +60,8 @@ export default function ContactUs() {
           <Group justify="flex-end" mt="md">
             <Button className={classes.control}>Send message</Button>
           </Group>
-        </div>
+        </Box>
       </SimpleGrid>
-    </div>
+    </Box>
   );
 }
