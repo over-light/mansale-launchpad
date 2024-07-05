@@ -1,5 +1,5 @@
+import ConfirmModal from '@/components/common/ConfirmModal';
 import { useTxContext } from '@/components/contexts/TxContext';
-import ConfirmModal from '@/components/pages/launchpads/token/ConfirmModal';
 import {
   Button,
   Card,
