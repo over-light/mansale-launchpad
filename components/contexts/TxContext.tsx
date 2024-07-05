@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ITxContext } from '../../utils/types/types';
-import ResultModal from '../pages/launchpads/token/ResultModal';
 import { useDisclosure } from '@mantine/hooks';
+import ResultModal from '../common/ResultModal';
 
 const TxContext = createContext<ITxContext>({});
 
