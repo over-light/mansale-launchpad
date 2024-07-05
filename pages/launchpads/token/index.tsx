@@ -89,14 +89,14 @@ export const CreateToken = () => {
               label="Decimals"
               placeholder="0-18"
               value={decimals}
-              onChange={(val) => setDecimals(val)}
+              onChange={(val) => setDecimals(parseInt(val.toString()))}
               required
             />
             <NumberInput
               label="Total Supply"
               placeholder="1000000"
               value={totalSupply}
-              onChange={(val) => setTotalSupply(val)}
+              onChange={(val) => setDecimals(parseInt(val.toString()))}
               required
             />
             <TextInput

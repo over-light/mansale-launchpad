@@ -16,21 +16,20 @@ import {
 import axios from 'axios';
 import { showNotification } from '@mantine/notifications';
 import { useConnection } from '@solana/wallet-adapter-react';
+import { PreSaleType } from '@/utils/types/types';
 
 function PresalePage() {
   const [tokenAddress, setTokenAddress] = useState('');
-  const [tokenData, setTokenData] = useState(null);
+  const [tokenData, setTokenData] = useState<PreSaleType | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   const { connection } = useConnection();
   const fetchTokenData = async (address) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(
-        `https://solscan.io/token/${address}`
-      );
+      const response = await axios.get(`https://solscan.io/token/${address}`);
       console.log(response);
       setTokenData(response.data);
       setLoading(false);
