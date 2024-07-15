@@ -31,3 +31,14 @@ export type CreateTokenType = {
   freezeAuthority: string;
   updateAuthority: string;
 };
+<<<<<<< HEAD
+
+export type TokenType = {
+  name: string;
+  symbol: string;
+  decimals: number;
+  totalSupply: number;
+  logoURI: string;
+};
+=======
+>>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016

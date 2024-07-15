@@ -24,7 +24,15 @@
     "@mantine/hooks": "7.11.0",
     "@mantine/modals": "^7.11.1",
     "@mantine/notifications": "^7.11.1",
+<<<<<<< HEAD
+    "@metaplex-foundation/js": "^0.20.1",
+    "@metaplex-foundation/mpl-token-metadata": "^3.2.1",
     "@next/bundle-analyzer": "^14.2.4",
+    "@solana/spl-token": "^0.4.7",
+    "@solana/spl-token-registry": "^0.2.4574",
+=======
+    "@next/bundle-analyzer": "^14.2.4",
+>>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",

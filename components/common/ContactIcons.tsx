@@ -10,18 +10,18 @@ interface ContactIconProps extends Omit<React.ComponentPropsWithoutRef<'div'>, '
 
 function ContactIcon({ icon: Icon, title, description, ...others }: ContactIconProps) {
   return (
-    <div className={classes.wrapper} {...others}>
+    <Box className={classes.wrapper} {...others}>
       <Box mr="md">
         <Icon style={{ width: rem(24), height: rem(24) }} />
       </Box>
 
-      <div>
+      <Box>
         <Text size="xs" className={classes.title}>
           {title}
         </Text>
         <Text className={classes.description}>{description}</Text>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
