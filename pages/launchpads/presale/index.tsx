@@ -16,22 +16,35 @@ import {
 import axios from 'axios';
 import { showNotification } from '@mantine/notifications';
 import { useConnection } from '@solana/wallet-adapter-react';
-import { PreSaleType } from '@/utils/types/types';
+import { TokenType } from '@/utils/types/types';
+import { PublicKey } from '@solana/web3.js';
+import { fetchMetadata } from '@metaplex-foundation/mpl-token-metadata';
+import { Metaplex } from '@metaplex-foundation/js';
+import { TokenListProvider, ENV, TokenInfo } from '@solana/spl-token-registry';
+import { getMint } from '@solana/spl-token';
 
 function PresalePage() {
   const [tokenAddress, setTokenAddress] = useState('');
-  const [tokenData, setTokenData] = useState<PreSaleType | null>(null);
+  const [tokenData, setTokenData] = useState<TokenType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
 
   const { connection } = useConnection();
+
   const fetchTokenData = async (address) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`https://solscan.io/token/${address}`);
-      console.log(response);
-      setTokenData(response.data);
+      const mintAddress = new PublicKey(address);
+      const mintInfo = await getMint(connection, mintAddress);
+      console.log(mintInfo);
+      // const tokenProvider = new TokenListProvider();
+      // const tokenListContainer = await tokenProvider.resolve();
+      // const tokenList = tokenListContainer.filterByChainId(ENV.MainnetBeta).getList();
+      // console.log("TOKENLIST", tokenList)
+      // const tokenInfo = tokenList.find((token) => token.address === address);
+      // console.log("TOKENINFO", tokenInfo);
+      // // setTokenData(tokenInfo);
       setLoading(false);
     } catch (err) {
       showNotification({ message: 'Failed' });
@@ -80,12 +93,12 @@ function PresalePage() {
         {tokenData && (
           <Card shadow="sm" padding="lg" radius="md" withBorder mt="md">
             <Stack gap="md">
-              <Image src={tokenData?.logoURL} height={160} alt="Token Logo" />
+              <Image src={tokenData?.logoURI} height={160} alt="Token Logo" />
               <Text>Token Name: {tokenData?.name}</Text>
               <Text>Token Symbol: {tokenData?.symbol}</Text>
               <Text>Decimals: {tokenData?.decimals}</Text>
               <Text>Total Supply: {tokenData?.totalSupply}</Text>
-              <Text>Token Price: {tokenData?.price}</Text>
+              {/* <Text>Token Price: {tokenData?.price}</Text>
               <Text>Start Date: {tokenData?.startDate}</Text>
               <Text>End Date: {tokenData?.endDate}</Text>
               <Text>Min Contribution: {tokenData?.minContribution}</Text>
@@ -116,7 +129,7 @@ function PresalePage() {
                   {tokenData?.twitter}
                 </a>
               </Text>
-              <Text>Description: {tokenData?.description}</Text>
+              <Text>Description: {tokenData?.description}</Text> */}
               <Badge color="green">Contract Address: {tokenAddress}</Badge>
             </Stack>
           </Card>
