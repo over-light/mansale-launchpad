@@ -32,22 +32,10 @@ export type CreateTokenType = {
   updateAuthority: string;
 };
 
-export type PreSaleType = {
+export type TokenType = {
   name: string;
   symbol: string;
   decimals: number;
   totalSupply: number;
-  price: number;
-  startDate: number;
-  endDate: number;
-  minContribution: number;
-  maxContribution: number;
-  softCap: number;
-  hardCap: number;
-  logoURL: string;
-  website: string;
-  telegram: string;
-  discord: string;
-  twitter: string;
-  description: string;
+  logoURI: string;
 };
