@@ -17,11 +17,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
 const TokenAccounts = ({ publicKey, connection }) => {
-<<<<<<< HEAD
-  const [tokenAccounts, setTokenAccounts] = useState<any[]>([]);
-=======
   const [tokenAccounts, setTokenAccounts] = useState([]);
->>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
 
   useEffect(() => {
     const getTokenAccounts = async () => {

@@ -7,20 +7,12 @@ import {
   NumberInput,
   Stack,
   Textarea,
-<<<<<<< HEAD
   Title,
-=======
-  Title
->>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
 } from '@mantine/core';
 import { useState } from 'react';
 
 function CreateAirdrop() {
-<<<<<<< HEAD
   const [addresses, setAddresses] = useState('');
-=======
-  const [addresses, setAddresses] = useState("");
->>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
   const [amount, setAmount] = useState(0);
 
   const handleSubmit = () => {
@@ -57,11 +49,7 @@ function CreateAirdrop() {
             label="Amount"
             placeholder="0"
             value={amount}
-<<<<<<< HEAD
-            onChange={(val) => setAmount(parseInt(val.toString()))}
-=======
             onChange={(val) => setAmount(val)}
->>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
             required
           />
         </Stack>

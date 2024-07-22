@@ -16,23 +16,6 @@ import {
 import axios from 'axios';
 import { showNotification } from '@mantine/notifications';
 import { useConnection } from '@solana/wallet-adapter-react';
-<<<<<<< HEAD
-import { TokenType } from '@/utils/types/types';
-import { PublicKey } from '@solana/web3.js';
-import { fetchMetadata } from '@metaplex-foundation/mpl-token-metadata';
-import { Metaplex } from '@metaplex-foundation/js';
-import { TokenListProvider, ENV, TokenInfo } from '@solana/spl-token-registry';
-import { getMint } from '@solana/spl-token';
-
-function PresalePage() {
-  const [tokenAddress, setTokenAddress] = useState('');
-  const [tokenData, setTokenData] = useState<TokenType | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
-
-  const { connection } = useConnection();
-
-=======
 
 function PresalePage() {
   const [tokenAddress, setTokenAddress] = useState('');
@@ -41,47 +24,20 @@ function PresalePage() {
   const [error, setError] = useState(null);
 
   const { connection } = useConnection();
->>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
   const fetchTokenData = async (address) => {
     setLoading(true);
     setError(null);
     try {
-<<<<<<< HEAD
-      const mintAddress = new PublicKey(address);
-      const mintInfo = await getMint(connection, mintAddress);
-      console.log(mintInfo);
-      // const tokenProvider = new TokenListProvider();
-      // const tokenListContainer = await tokenProvider.resolve();
-      // const tokenList = tokenListContainer.filterByChainId(ENV.MainnetBeta).getList();
-      // console.log("TOKENLIST", tokenList)
-      // const tokenInfo = tokenList.find((token) => token.address === address);
-      // console.log("TOKENINFO", tokenInfo);
-      // // setTokenData(tokenInfo);
-=======
       const response = await axios.get(
         `https://solscan.io/token/${address}`
       );
       console.log(response);
       setTokenData(response.data);
->>>>>>> 512de5141181691291f4a85f61ac30e7dcee8016
-      setLoading(false);
-    } catch (err) {
-      showNotification({ message: 'Failed' });
-      setError('Failed to fetch token data');
-      setLoading(false);
-    }
-  };
-
-  const handleFetchData = () => {
-    fetchTokenData(tokenAddress);
-  };
-
   return (
     <Container>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Card.Section>
           <Image
-            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
             height={160}
             alt="Token Logo"
           />
